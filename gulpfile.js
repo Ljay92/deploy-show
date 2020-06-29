@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-06-28 23:54:05
- * @LastEditTime: 2020-06-30 00:37:25
+ * @LastEditTime: 2020-06-30 00:42:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \code\gulp\gulpfile.js
@@ -140,12 +140,12 @@ const serve = series(compile,server)
 // 线上编译热更新服务，进行了js,css压缩编译操作
 const start = series(build, server)
 // 发布代码
-const mydeploy = () => {
+const _deploy = () => {
     return src('dist/**/*')
     .pipe(plugins.ghPages())
 }
 // 将编译后的代码发布到gh-page
-const deploy = series(build, mydeploy)
+const deploy = series(build, _deploy)
 
 module.exports = {
     clean,
@@ -153,6 +153,5 @@ module.exports = {
     lint,
     serve,
     start,
-    deploy,
-    mydeploy
+    deploy
 }
