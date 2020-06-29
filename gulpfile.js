@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-06-28 23:54:05
- * @LastEditTime: 2020-06-30 00:27:25
+ * @LastEditTime: 2020-06-30 00:37:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \code\gulp\gulpfile.js
@@ -29,10 +29,6 @@ try {
     // 合并配置
     config = Object.assign({},config, loadConfig)
 } catch (error) {}
-
-const test =()=>{
-    console.l
-}
 
 // 处理样式文件的私有的构建任务,放到临时目录temp
 const style = ()=>{
@@ -143,6 +139,13 @@ const build = series(
 const serve = series(compile,server)
 // 线上编译热更新服务，进行了js,css压缩编译操作
 const start = series(build, server)
+// 发布代码
+const mydeploy = () => {
+    return src('dist/**/*')
+    .pipe(plugins.ghPages())
+}
+// 将编译后的代码发布到gh-page
+const deploy = series(build, mydeploy)
 
 module.exports = {
     clean,
@@ -150,5 +153,6 @@ module.exports = {
     lint,
     serve,
     start,
-    deploy
+    deploy,
+    mydeploy
 }
